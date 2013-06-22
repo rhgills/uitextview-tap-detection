@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		448E5D52D3A94F8A9C28F103 /* libPods-UITextView Link DetectionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5D8159A105458ABCB08657 /* libPods-UITextView Link DetectionTests.a */; };
+		53CF58681FAD4C46B5F36599 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9DC3375BB954A0DBECEE36D /* libPods.a */; };
 		E1A5C6CC1775EEE90044ADE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CB1775EEE90044ADE9 /* UIKit.framework */; };
 		E1A5C6CE1775EEE90044ADE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CD1775EEE90044ADE9 /* Foundation.framework */; };
 		E1A5C6D01775EEE90044ADE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CF1775EEE90044ADE9 /* CoreGraphics.framework */; };
@@ -21,6 +23,9 @@
 		E1A5C6EC1775EEE90044ADE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CD1775EEE90044ADE9 /* Foundation.framework */; };
 		E1A5C6F41775EEE90044ADE9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1A5C6F21775EEE90044ADE9 /* InfoPlist.strings */; };
 		E1A5C6F71775EEE90044ADE9 /* UITextView_Link_DetectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A5C6F61775EEE90044ADE9 /* UITextView_Link_DetectionTests.m */; };
+		E1A5C7011775EF0E0044ADE9 /* UITextView+RSExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A5C7001775EF0E0044ADE9 /* UITextView+RSExtras.m */; };
+		E1A5C7071775EF8B0044ADE9 /* NSString+RSExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A5C7061775EF8B0044ADE9 /* NSString+RSExtras.m */; };
+		E1A5C71E1775F3360044ADE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CF1775EEE90044ADE9 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		025C98221CE441E088B36FBC /* Pods-UITextView Link DetectionTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITextView Link DetectionTests.xcconfig"; path = "Pods/Pods-UITextView Link DetectionTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		AC5D8159A105458ABCB08657 /* libPods-UITextView Link DetectionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UITextView Link DetectionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9DC3375BB954A0DBECEE36D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A5C6C71775EEE90044ADE9 /* UITextView Link Detection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UITextView Link Detection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A5C6CB1775EEE90044ADE9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E1A5C6CD1775EEE90044ADE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -53,6 +61,12 @@
 		E1A5C6F31775EEE90044ADE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E1A5C6F51775EEE90044ADE9 /* UITextView_Link_DetectionTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UITextView_Link_DetectionTests.h; sourceTree = "<group>"; };
 		E1A5C6F61775EEE90044ADE9 /* UITextView_Link_DetectionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UITextView_Link_DetectionTests.m; sourceTree = "<group>"; };
+		E1A5C7001775EF0E0044ADE9 /* UITextView+RSExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+RSExtras.m"; sourceTree = "<group>"; };
+		E1A5C7021775EF320044ADE9 /* UITextView+RSExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+RSExtras.h"; sourceTree = "<group>"; };
+		E1A5C7051775EF8B0044ADE9 /* NSString+RSExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RSExtras.h"; sourceTree = "<group>"; };
+		E1A5C7061775EF8B0044ADE9 /* NSString+RSExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RSExtras.m"; sourceTree = "<group>"; };
+		E1A5C71A1775F2DC0044ADE9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FD835AE618B44ADBB5F863B5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +77,7 @@
 				E1A5C6CC1775EEE90044ADE9 /* UIKit.framework in Frameworks */,
 				E1A5C6CE1775EEE90044ADE9 /* Foundation.framework in Frameworks */,
 				E1A5C6D01775EEE90044ADE9 /* CoreGraphics.framework in Frameworks */,
+				53CF58681FAD4C46B5F36599 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,9 +85,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1A5C71E1775F3360044ADE9 /* CoreGraphics.framework in Frameworks */,
 				E1A5C6EA1775EEE90044ADE9 /* SenTestingKit.framework in Frameworks */,
 				E1A5C6EB1775EEE90044ADE9 /* UIKit.framework in Frameworks */,
 				E1A5C6EC1775EEE90044ADE9 /* Foundation.framework in Frameworks */,
+				448E5D52D3A94F8A9C28F103 /* libPods-UITextView Link DetectionTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,10 +99,13 @@
 		E1A5C6BC1775EEE90044ADE9 = {
 			isa = PBXGroup;
 			children = (
+				E1A5C71A1775F2DC0044ADE9 /* QuartzCore.framework */,
 				E1A5C6D11775EEE90044ADE9 /* UITextView Link Detection */,
 				E1A5C6EF1775EEE90044ADE9 /* UITextView Link DetectionTests */,
 				E1A5C6CA1775EEE90044ADE9 /* Frameworks */,
 				E1A5C6C81775EEE90044ADE9 /* Products */,
+				FD835AE618B44ADBB5F863B5 /* Pods.xcconfig */,
+				025C98221CE441E088B36FBC /* Pods-UITextView Link DetectionTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +125,8 @@
 				E1A5C6CD1775EEE90044ADE9 /* Foundation.framework */,
 				E1A5C6CF1775EEE90044ADE9 /* CoreGraphics.framework */,
 				E1A5C6E91775EEE90044ADE9 /* SenTestingKit.framework */,
+				D9DC3375BB954A0DBECEE36D /* libPods.a */,
+				AC5D8159A105458ABCB08657 /* libPods-UITextView Link DetectionTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,6 +136,10 @@
 			children = (
 				E1A5C6DA1775EEE90044ADE9 /* AppDelegate.h */,
 				E1A5C6DB1775EEE90044ADE9 /* AppDelegate.m */,
+				E1A5C7001775EF0E0044ADE9 /* UITextView+RSExtras.m */,
+				E1A5C7021775EF320044ADE9 /* UITextView+RSExtras.h */,
+				E1A5C7051775EF8B0044ADE9 /* NSString+RSExtras.h */,
+				E1A5C7061775EF8B0044ADE9 /* NSString+RSExtras.m */,
 				E1A5C6D21775EEE90044ADE9 /* Supporting Files */,
 			);
 			path = "UITextView Link Detection";
@@ -159,9 +185,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1A5C6FA1775EEE90044ADE9 /* Build configuration list for PBXNativeTarget "UITextView Link Detection" */;
 			buildPhases = (
+				5253A4BBD7FE44F8B5DAFF45 /* Check Pods Manifest.lock */,
 				E1A5C6C31775EEE90044ADE9 /* Sources */,
 				E1A5C6C41775EEE90044ADE9 /* Frameworks */,
 				E1A5C6C51775EEE90044ADE9 /* Resources */,
+				2DCBE4823AA04686AB87C86F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,10 +204,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1A5C6FD1775EEE90044ADE9 /* Build configuration list for PBXNativeTarget "UITextView Link DetectionTests" */;
 			buildPhases = (
+				8E0A074071134BA1AFC9F8AB /* Check Pods Manifest.lock */,
 				E1A5C6E31775EEE90044ADE9 /* Sources */,
 				E1A5C6E41775EEE90044ADE9 /* Frameworks */,
 				E1A5C6E51775EEE90044ADE9 /* Resources */,
 				E1A5C6E61775EEE90044ADE9 /* ShellScript */,
+				A0C74721662847C691CDE52C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -241,6 +271,62 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2DCBE4823AA04686AB87C86F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+		5253A4BBD7FE44F8B5DAFF45 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		8E0A074071134BA1AFC9F8AB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
+		A0C74721662847C691CDE52C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-UITextView Link DetectionTests-resources.sh\"\n";
+		};
 		E1A5C6E61775EEE90044ADE9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -263,6 +349,8 @@
 			files = (
 				E1A5C6D81775EEE90044ADE9 /* main.m in Sources */,
 				E1A5C6DC1775EEE90044ADE9 /* AppDelegate.m in Sources */,
+				E1A5C7011775EF0E0044ADE9 /* UITextView+RSExtras.m in Sources */,
+				E1A5C7071775EF8B0044ADE9 /* NSString+RSExtras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +445,7 @@
 		};
 		E1A5C6FB1775EEE90044ADE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD835AE618B44ADBB5F863B5 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UITextView Link Detection/UITextView Link Detection-Prefix.pch";
@@ -368,6 +457,7 @@
 		};
 		E1A5C6FC1775EEE90044ADE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD835AE618B44ADBB5F863B5 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UITextView Link Detection/UITextView Link Detection-Prefix.pch";
@@ -379,6 +469,7 @@
 		};
 		E1A5C6FE1775EEE90044ADE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 025C98221CE441E088B36FBC /* Pods-UITextView Link DetectionTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UITextView Link Detection.app/UITextView Link Detection";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -396,6 +487,7 @@
 		};
 		E1A5C6FF1775EEE90044ADE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 025C98221CE441E088B36FBC /* Pods-UITextView Link DetectionTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UITextView Link Detection.app/UITextView Link Detection";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -430,6 +522,7 @@
 				E1A5C6FC1775EEE90044ADE9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E1A5C6FD1775EEE90044ADE9 /* Build configuration list for PBXNativeTarget "UITextView Link DetectionTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +531,7 @@
 				E1A5C6FF1775EEE90044ADE9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
