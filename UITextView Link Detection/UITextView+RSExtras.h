@@ -19,6 +19,4 @@
 - (void)appendToString:(NSMutableString *)s byMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition;
 - (id)appendToString:(NSMutableString *)s byMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition;
 
-- (BOOL)potentialLinkIsEmpty:(NSString *)potentialLink;
-
 @end

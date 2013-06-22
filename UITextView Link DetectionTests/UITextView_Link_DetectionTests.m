@@ -76,43 +76,6 @@
     STAssertNil(link, nil);
 }
 
-//- (void)testNoLinkIfPotentialLinkEmptyDirect
-//{
-//    id emptyPotentialLink = [self newMock];
-//    [[[fakeTextView stub] andReturn:emptyPotentialLink] rs_potentialLinkAtPoint:CGPointZero];
-//    
-//    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){YES})] potentialLinkIsEmpty:emptyPotentialLink];
-//    
-//    NSString *link = [textView rs_linkAtPoint:CGPointZero];
-//    STAssertNil(link, nil);
-//}
-//
-//#pragma mark - rs_linkAtPoint and potentialLinkIsEmpty: testing directly
-//- (void)testNoLinkIfPotentialLinkEmptyDirectShortcuts
-//{    
-//    [[fakeTextView stub] rs_potentialLinkAtPoint:CGPointZero];
-//    
-//    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){YES})] potentialLinkIsEmpty:(id)anything()];
-//    
-//    NSString *link = [textView rs_linkAtPoint:CGPointZero];
-//    STAssertNil(link, nil);
-//}
-//
-//- (void)testLinkEmptyIfNil
-//{
-//    STAssertTrue([textView potentialLinkIsEmpty:nil], nil);
-//}
-//
-//- (void)testLinkEmptyIfEmpty
-//{
-//    STAssertTrue([textView potentialLinkIsEmpty:@""], nil);
-//}
-//
-//- (void)testNonEmptyLinkNonEmpty
-//{
-//    STAssertFalse([textView potentialLinkIsEmpty:@"aaa"], nil);
-//}
-
 - (void)testNoLinkIfNoActualLinks
 {
     NSString *potentialLink = @"example.com";
