@@ -56,13 +56,21 @@ static BOOL stringCharacterIsAllowedAsPartOfLink(NSString *s) {
     return s;
 }
 
+// nil behavior important?
+// rename: firstCharacterAtPositionIsCrOrLf:
 - (BOOL)firstCharacterIsCrOrLf:(UITextPosition *)startingTextPosition
 {
     NSString *oneCharacter = [self characterAtPosition:startingTextPosition];
-    if ([oneCharacter isEqualToString:@"\n"] || [oneCharacter isEqualToString:@"\r"])
+    if ([self isCrOrLf:oneCharacter])
         return YES;
 
     return NO;
+}
+
+// TODO: move to NSString
+- (BOOL)isCrOrLf:(NSString *)oneCharacter
+{
+    return ([oneCharacter isEqualToString:@"\n"] || [oneCharacter isEqualToString:@"\r"]);
 }
 
 - (void)appendToString:(NSMutableString *)s byMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition

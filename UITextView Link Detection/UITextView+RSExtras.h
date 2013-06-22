@@ -20,5 +20,11 @@
 - (id)appendToString:(NSMutableString *)s byMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition;
 
 - (NSString *)linkFromPotentialLink:(NSString *)potentialLink;
+- (BOOL)characterAtPositionIsLastCharacterInDocument:(CGPoint)point;
+
+- (BOOL)firstCharacterIsCrOrLf:(UITextPosition *)startingTextPosition;
+- (BOOL)isCrOrLf:(NSString *)oneCharacter;
+
+- (NSString *)characterAtPosition:(UITextPosition *)textPosition;
 
 @end

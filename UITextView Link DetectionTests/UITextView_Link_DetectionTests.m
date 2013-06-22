@@ -53,7 +53,7 @@
     [super tearDown];
 }
 
-#pragma mark - Test rs_linkAtPoint (testing potentialLinkIsEmpty implicitly)
+#pragma mark - Test rs_linkAtPoint (testing potentialLinkIsEmpty. linkFromPotentialLink implicity)
 /** 
  These tests are good, and can test the potentialLinkIsEmpty method implicitly. That means
  that that method is OK to be a private helper.
@@ -119,17 +119,6 @@
     STAssertEqualObjects(link, @"first", nil);
 }
 
-// below test is failing!
-//- (void)testLinkFromPotentialLinkIfNonemptyPotentialLink
-//{
-//    id link = [self newMock];
-//    id potentialLink = [self newMock];
-//    
-//    [[[fakeTextView stub] andReturn:potentialLink] rs_potentialLinkAtPoint:CGPointZero];
-//    [[[fakeTextView stub] andReturn:link] linkFromPotentialLink:potentialLink];
-//    
-//    assertThat([textView rs_linkAtPoint:CGPointZero], sameInstance(link));
-//}
 
 #pragma mark - Test Potential Link at Point
 // possible refactoring generalization: contingous block of text/a word detection!
@@ -140,21 +129,73 @@
     
     NSString *potentialLink = [textView rs_potentialLinkAtPoint:pointAtEndOfDocument];
     
-    assertThatInteger([potentialLink length], equalToInteger(0));
+    assertThatInteger([potentialLink length], equalToInteger(0)); // a little coupled to implementation? nil or empty is OK
 }
 
-
-- (void)testNoPotentialLinkIfAtEndOfDocumentFull
+// test closestPosition
+- (void)testClosestPositionToEndOfDocumentNotAtEndOfDocumentIsClosestPosition
 {
-    CGPoint pointAtEndOfDocument = CGPointZero;
-    FakeTextRange *textRangeEndingAtDocumentEnd = [[FakeTextRange alloc] init];
+    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){NO})] characterAtPositionIsLastCharacterInDocument:CGPointZero];
+    
+    id closestPosition = [self newMock];
+    [[[fakeTextView stub] andReturn:closestPosition] closestPositionToPoint:CGPointZero];
+    
+    assertThat([textView closestPositionNotAtEndOfDocumentToPoint:CGPointZero], sameInstance(closestPosition));
+}
+
+- (void)testNoClosestPositionNotAtEndOfDocumentIfAtEndOfDocument
+{
+    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){YES})] characterAtPositionIsLastCharacterInDocument:CGPointZero];
+
+    assertThat([textView closestPositionNotAtEndOfDocumentToPoint:CGPointZero], nilValue());
+}
+
+- (void)testCharacterAtPositionIsLastInDocument
+{
+    id endOfDocumentPosition = [self newMock];
+    
+    id textRange = [OCMockObject mockForClass:[UITextRange class]];
+    [[[textRange stub] andReturn:endOfDocumentPosition] end];
+    
+    [[[fakeTextView stub] andReturn:textRange] characterRangeAtPoint:CGPointZero];
+    
+    [[[fakeTextView stub] andReturn:endOfDocumentPosition] endOfDocument];
+    
+    assertThatBool([textView characterAtPositionIsLastCharacterInDocument:CGPointZero], equalToBool(YES));
+}
+
+- (void)testCharacterAtPositionIsNotLastInDocument
+{
+    id endOfDocumentPosition = [self newMock];
+    id otherTextPosition = [self newMock];
+    
+    id textRange = [OCMockObject mockForClass:[UITextRange class]];
+    [[[textRange stub] andReturn:otherTextPosition] end];
+    
+    [[[fakeTextView stub] andReturn:textRange] characterRangeAtPoint:CGPointZero];
+    
+    [[[fakeTextView stub] andReturn:endOfDocumentPosition] endOfDocument];
+    
+    assertThatBool([textView characterAtPositionIsLastCharacterInDocument:CGPointZero], equalToBool(NO));
+}
+
+// isEmpty HCMatcher
+// if count or length is responded to and is 0, or if nil - isEmpty
+// if both responded to, undefined - throw to warn
+
+// alternately: isEmptyCollection, isEmptyString() or nil?
+
+- (void)testNoPotentialLinkIfAtEndOfDocument
+{
     UITextPosition *documentEndPosition = [[UITextPosition alloc] init];
+    
+    FakeTextRange *textRangeEndingAtDocumentEnd = [[FakeTextRange alloc] init];
     textRangeEndingAtDocumentEnd.end = documentEndPosition;
     
-    [[[fakeTextView stub] andReturn:textRangeEndingAtDocumentEnd] characterRangeAtPoint:pointAtEndOfDocument];
+    [[[fakeTextView stub] andReturn:textRangeEndingAtDocumentEnd] characterRangeAtPoint:CGPointZero];
     [[[fakeTextView stub] andReturn:documentEndPosition] endOfDocument];
     
-    NSString *potentialLink = [textView rs_potentialLinkAtPoint:pointAtEndOfDocument];
+    NSString *potentialLink = [textView rs_potentialLinkAtPoint:CGPointZero];
     
     assertThatInteger([potentialLink length], equalToInteger(0));
 }
@@ -163,16 +204,8 @@
 {
     CGPoint tapPoint = CGPointZero;
     
-    // make sure that we aren't at end to get past first check!
-    FakeTextRange *textRangeNotAtDocumentEnd = [[FakeTextRange alloc] init];
-    UITextPosition *documentEndPosition = [[UITextPosition alloc] init];
-    UITextPosition *notAtDocumentEndPosition = [[UITextPosition alloc] init];
-    textRangeNotAtDocumentEnd.end = notAtDocumentEndPosition;
+    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){YES})] characterAtPositionIsLastCharacterInDocument:tapPoint];
     
-    [[[fakeTextView stub] andReturn:textRangeNotAtDocumentEnd] characterRangeAtPoint:tapPoint];
-    [[[fakeTextView stub] andReturn:documentEndPosition] endOfDocument];
-    
-    // actual part of this test
     [[[fakeTextView stub] andReturn:nil] closestPositionToPoint:tapPoint];
     
     NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
@@ -189,6 +222,15 @@
     return [OCMockObject mockForClass:[NSObject class]];
 }
 
+- (void)testNoPotentialLinkIfFirstCharacterCfOrLf
+{
+    [[fakeTextView stub] closestPositionNotAtEndOfDocumentToPoint:CGPointZero];
+    [[[fakeTextView stub] andReturnValue:OCMOCK_VALUE((BOOL){YES})] firstCharacterIsCrOrLf:nil];
+    
+    assertThat([textView rs_potentialLinkAtPoint:CGPointZero], nilValue());
+}
+
+// compare to above
 - (void)testNoPotentialLinkIfFirstCharacterNewline
 {
     id position0 = [self newTextPosition];
@@ -205,13 +247,60 @@
     
      [[[tokenizer stub] andReturn:range] rangeEnclosingPosition:position0 withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
     [[[fakeTextView stub] andReturn:charactersToTheRight[0]] textInRange:range];
-    [[[fakeTextView stub] andReturn:nil] positionFromPosition:position0 offset:1];
 
     
 
     NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
     assertThat(potentialLink, nilValue());
 }
+
+- (void)testCharacterAtPosition
+{
+    id position = [self newTextPosition];
+    
+    id range = [self newMock];
+    
+    id tokenizer = [OCMockObject mockForProtocol:@protocol(UITextInputTokenizer)];
+    [[[fakeTextView stub] andReturn:tokenizer] tokenizer];
+    
+    [[[tokenizer stub] andReturn:range] rangeEnclosingPosition:position withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    [[[fakeTextView stub] andReturn:@"a"] textInRange:range];
+    
+    
+    assertThat([textView characterAtPosition:position], equalTo(@"a"));
+}
+
+- (void)testCrRecognized
+{
+    id position = [self newMock];
+    
+    NSString *cr = @"\n";
+    [[[fakeTextView stub] andReturn:cr] characterAtPosition:position];
+    
+    STAssertTrue([textView firstCharacterIsCrOrLf:position], nil);
+}
+
+- (void)testLfRecognized
+{
+    id position = [self newMock];
+    
+    NSString *lf = @"\r";
+    [[[fakeTextView stub] andReturn:lf] characterAtPosition:position];
+    
+    STAssertTrue([textView firstCharacterIsCrOrLf:position], nil);
+}
+
+- (void)testOtherCharacterOK
+{
+    id position = [self newMock];
+    
+    NSString *a = @"a";
+    [[[fakeTextView stub] andReturn:a] characterAtPosition:position];
+    
+    STAssertFalse([textView firstCharacterIsCrOrLf:position], nil);
+}
+
+
 
 - (void)testDetectsPortionOfWordToTheRightOfTapPosition
 {
