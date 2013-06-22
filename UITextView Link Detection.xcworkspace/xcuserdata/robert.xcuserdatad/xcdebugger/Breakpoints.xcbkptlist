@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link DetectionTests/UITextView_Link_DetectionTests.m"
-         timestampString = "393609575.403469"
+         timestampString = "393634807.532101"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "-testDetectsPortionOfWordToTheRightOfTapPosition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link DetectionTests/UITextView_Link_DetectionTests.m"
-         timestampString = "393611553.099577"
+         timestampString = "393634807.532101"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "281"
-         endingLineNumber = "281"
+         startingLineNumber = "319"
+         endingLineNumber = "319"
          landmarkName = "-testDetectsPortionOfWordToTheLeftOfTapPosition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link Detection/UITextView+RSExtras.m"
-         timestampString = "393612041.318648"
+         timestampString = "393634726.483225"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
          landmarkName = "-forTextPositionStartingAt:movingBy:do:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link Detection/UITextView+RSExtras.m"
-         timestampString = "393612041.318648"
+         timestampString = "393634726.483225"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "122"
-         endingLineNumber = "122"
+         startingLineNumber = "114"
+         endingLineNumber = "114"
          landmarkName = "-forTextPositionStartingAt:movingBy:do:"
          landmarkType = "5">
       </FileBreakpoint>
