@@ -230,46 +230,6 @@
     assertThat([textView rs_potentialLinkAtPoint:CGPointZero], nilValue());
 }
 
-// compare to above
-- (void)testNoPotentialLinkIfFirstCharacterNewline
-{
-    id position0 = [self newTextPosition];
-    CGPoint tapPoint = CGPointZero;
-    
-    
-    [[[fakeTextView stub] andReturn:position0] closestPositionNotAtEndOfDocumentToPoint:tapPoint];
-    NSArray *charactersToTheRight = @[@"\n", @"a", @"b"];
-    
-    id range = [self newMock];
-    
-    id tokenizer = [OCMockObject mockForProtocol:@protocol(UITextInputTokenizer)];
-    [[[fakeTextView stub] andReturn:tokenizer] tokenizer];
-    
-     [[[tokenizer stub] andReturn:range] rangeEnclosingPosition:position0 withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
-    [[[fakeTextView stub] andReturn:charactersToTheRight[0]] textInRange:range];
-
-    
-
-    NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
-    assertThat(potentialLink, nilValue());
-}
-
-- (void)testCharacterAtPosition
-{
-    id position = [self newTextPosition];
-    
-    id range = [self newMock];
-    
-    id tokenizer = [OCMockObject mockForProtocol:@protocol(UITextInputTokenizer)];
-    [[[fakeTextView stub] andReturn:tokenizer] tokenizer];
-    
-    [[[tokenizer stub] andReturn:range] rangeEnclosingPosition:position withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
-    [[[fakeTextView stub] andReturn:@"a"] textInRange:range];
-    
-    
-    assertThat([textView characterAtPosition:position], equalTo(@"a"));
-}
-
 - (void)testCrRecognized
 {
     id position = [self newMock];
@@ -299,6 +259,24 @@
     
     STAssertFalse([textView firstCharacterIsCrOrLf:position], nil);
 }
+
+- (void)testCharacterAtPosition
+{
+    id position = [self newTextPosition];
+    
+    id range = [self newMock];
+    
+    id tokenizer = [OCMockObject mockForProtocol:@protocol(UITextInputTokenizer)];
+    [[[fakeTextView stub] andReturn:tokenizer] tokenizer];
+    
+    [[[tokenizer stub] andReturn:range] rangeEnclosingPosition:position withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    [[[fakeTextView stub] andReturn:@"a"] textInRange:range];
+    
+    
+    assertThat([textView characterAtPosition:position], equalTo(@"a"));
+}
+
+
 
 
 
