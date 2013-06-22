@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link DetectionTests/UITextView_Link_DetectionTests.m"
-         timestampString = "393634807.532101"
+         timestampString = "393635354.921278"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "270"
-         endingLineNumber = "270"
+         startingLineNumber = "261"
+         endingLineNumber = "261"
          landmarkName = "-testDetectsPortionOfWordToTheRightOfTapPosition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UITextView Link DetectionTests/UITextView_Link_DetectionTests.m"
-         timestampString = "393634807.532101"
+         timestampString = "393635354.921278"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "319"
-         endingLineNumber = "319"
+         startingLineNumber = "310"
+         endingLineNumber = "310"
          landmarkName = "-testDetectsPortionOfWordToTheLeftOfTapPosition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -53,6 +53,19 @@
          startingLineNumber = "114"
          endingLineNumber = "114"
          landmarkName = "-forTextPositionStartingAt:movingBy:do:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UITextView Link DetectionTests/UITextView_Link_DetectionTests.m"
+         timestampString = "393635396.981928"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "119"
+         endingLineNumber = "119"
+         landmarkName = "-testLinkIsFirstActualLink"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

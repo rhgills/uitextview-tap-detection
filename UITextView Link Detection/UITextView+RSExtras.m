@@ -156,6 +156,7 @@ static const NSInteger RightOffset = 1;
     return [self linkFromPotentialLink:potentialLink];
 }
 
+// private
 - (BOOL)potentialLinkIsEmpty:(NSString *)potentialLink
 {
     if (potentialLink == nil || [potentialLink length] < 1)
@@ -167,11 +168,19 @@ static const NSInteger RightOffset = 1;
 - (NSString *)linkFromPotentialLink:(NSString *)potentialLink
 {
     NSArray *links = [potentialLink rs_links];
-    if (links == nil || [links count] < 1)
+    if (arrayIsEmpty(links))
         return nil;
     
     NSString *firstLink = links[0];
     return firstLink;
+}
+
+static BOOL arrayIsEmpty(NSArray *array)
+{
+    if (array == nil || [array count] < 1)
+        return YES;
+    
+    return NO;
 }
 
 

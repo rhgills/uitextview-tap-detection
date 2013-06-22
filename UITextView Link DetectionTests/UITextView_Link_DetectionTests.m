@@ -106,9 +106,33 @@
     STAssertNil(link, nil);
 }
 
+- (void)testLinkIsFirstActualLink
+{
+    NSString *potentialLink = @"example.com";
+    id fakePotentialLink = [OCMockObject partialMockForObject:potentialLink];
+    
+    [[[fakeTextView stub] andReturn:fakePotentialLink] rs_potentialLinkAtPoint:CGPointZero];
+    
+    [[[fakePotentialLink stub] andReturn:@[@"first", @"second"]] rs_links];
+    NSString *link = [textView rs_linkAtPoint:CGPointZero];
+    
+    STAssertEqualObjects(link, @"first", nil);
+}
+
+// below test is failing!
+//- (void)testLinkFromPotentialLinkIfNonemptyPotentialLink
+//{
+//    id link = [self newMock];
+//    id potentialLink = [self newMock];
+//    
+//    [[[fakeTextView stub] andReturn:potentialLink] rs_potentialLinkAtPoint:CGPointZero];
+//    [[[fakeTextView stub] andReturn:link] linkFromPotentialLink:potentialLink];
+//    
+//    assertThat([textView rs_linkAtPoint:CGPointZero], sameInstance(link));
+//}
+
 #pragma mark - Test Potential Link at Point
 // possible refactoring generalization: contingous block of text/a word detection!
-
 - (void)testNoPotentialLinkIfAtEndOfDocumentShorter
 {
     CGPoint pointAtEndOfDocument = CGPointZero;
