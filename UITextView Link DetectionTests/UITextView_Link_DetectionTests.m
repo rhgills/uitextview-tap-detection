@@ -227,7 +227,7 @@
     [[[fakeTextView stub] andReturn:nil] positionFromPosition:position2 offset:1];
     
     // stubs to handle moving left!
-    [[fakeTextView stub] handleMovingLeftTapPosition:(id)anything() stringBuilder:(id)anything()];
+    [[fakeTextView stub] appendToString:(id)anything() byMovingLeftFromAndNotIncludingTextPosition:(id)anything()];
     
     NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
     assertThat(potentialLink, equalTo(@"abc"));
@@ -276,10 +276,66 @@
     [[[fakeTextView stub] andReturn:nil] positionFromPosition:position2 offset:-1];
     
     // stubs to handle moving right!
-    [[[fakeTextView stub] andReturn:[self newMock]] appendToString:(id)anything() byMovingRightFromTextPosition:(id)anything()];
+    [[fakeTextView stub] appendToString:(id)anything() byMovingRightFromAndIncludingTextPosition:(id)anything()];
     
     NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
     assertThat(potentialLink, equalTo(@"cb"));
+}
+
+- (void)combinesLeftAndRight
+{
+    // stubs to handle moving right!
+    [[[fakeTextView stub] andDo:^(NSInvocation *invocation) {
+        NSMutableString *mutableString;
+        [invocation getArgument:&mutableString atIndex:2];
+        
+        [mutableString appendString:@"cdef"];
+    }] appendToString:(id)anything() byMovingRightFromAndIncludingTextPosition:(id)anything()];
+    
+    
+    // actual
+    id position0 = [self newTextPosition];
+    CGPoint tapPoint = CGPointZero;
+    
+    
+    [[[fakeTextView stub] andReturn:position0] closestPositionNotAtEndOfDocumentToPoint:tapPoint];
+    
+    
+    // actual relevant parts
+    //    NSString *string = @"abc"; // where c is the start position, and handled by right
+    NSArray *charactersToTheLeft = @[@"c", @"b", @"a"]; // a is handled by right!
+    
+    NSArray *ranges = @[[self newMock], [self newMock], [self newMock]];
+    
+    
+    id position1 = [self newTextPosition];
+    id position2 = [self newTextPosition];
+    NSArray *positions = @[position0, position1, position2];
+    
+    // nextPosition for the position at that array
+    NSArray *nextPosition = @[position1, position2];
+    
+    // rangeEnclosingPosition returns a different UITextRange for each character.
+    // each range will return the character from textInRange:rangeOfChracter
+    
+    id tokenizer = [OCMockObject mockForProtocol:@protocol(UITextInputTokenizer)];
+    [[[fakeTextView stub] andReturn:tokenizer] tokenizer];
+    
+    [[[tokenizer stub] andReturn:ranges[0]] rangeEnclosingPosition:positions[0] withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    [[[tokenizer stub] andReturn:ranges[1]] rangeEnclosingPosition:positions[1] withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    [[[tokenizer stub] andReturn:ranges[2]] rangeEnclosingPosition:positions[2] withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    
+    [[[fakeTextView stub] andReturn:charactersToTheLeft[0]] textInRange:ranges[0]];
+    [[[fakeTextView stub] andReturn:charactersToTheLeft[1]] textInRange:ranges[1]];
+    [[[fakeTextView stub] andReturn:charactersToTheLeft[2]] textInRange:ranges[2]];
+    
+    [[[fakeTextView stub] andReturn:nextPosition[0]] positionFromPosition:position0 offset:-1];
+    [[[fakeTextView stub] andReturn:nextPosition[1]] positionFromPosition:position1 offset:-1];
+    [[[fakeTextView stub] andReturn:nil] positionFromPosition:position2 offset:-1];
+    
+
+    NSString *potentialLink = [textView rs_potentialLinkAtPoint:tapPoint];
+    assertThat(potentialLink, equalTo(@"abcdef"));
 }
 
 // first chracter is \n or \r, no potential link

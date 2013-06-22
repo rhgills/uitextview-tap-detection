@@ -14,8 +14,9 @@
 - (NSString *)rs_linkAtPoint:(CGPoint)point;
 
 // for tests
-- (void)handleMovingLeftTapPosition:(UITextPosition *)tapPosition stringBuilder:(NSMutableString *)s;
 - (UITextPosition *)closestPositionNotAtEndOfDocumentToPoint:(CGPoint)point;
-- (id)appendToString:(NSMutableString *)s byMovingRightFromTextPosition:(UITextPosition *)textPosition;
+
+- (void)appendToString:(NSMutableString *)s byMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition;
+- (id)appendToString:(NSMutableString *)s byMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition;
 
 @end

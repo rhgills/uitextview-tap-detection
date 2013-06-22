@@ -2,7 +2,6 @@
 
 @implementation UITextView (RSExtras)
 
-
 static BOOL stringCharacterIsAllowedAsPartOfLink(NSString *s) {
 
     /*[s length] is assumed to be 0 or 1. s may be nil.
@@ -19,111 +18,131 @@ static BOOL stringCharacterIsAllowedAsPartOfLink(NSString *s) {
 
 - (UITextPosition *)closestPositionNotAtEndOfDocumentToPoint:(CGPoint)point
 {
-    // check for the character being the last character in the document
+    /*If we don't check for end of document, then you could tap way below end of text, and it would return a link if the last text was a link. This has the unfortunate side effect that you can't tap on the last character of a link if it appears at the end of a document. I can live with shipping that.*/
+    
+    if ([self characterAtPositionIsLastCharacterInDocument:point]) {
+        return nil;
+    }
+
+    return [self closestPositionToPoint:point];
+}
+
+- (BOOL)characterAtPositionIsLastCharacterInDocument:(CGPoint)point
+{
     UITextRange *textRange = [self characterRangeAtPoint:point];
     UITextPosition *endOfDocumentTextPosition = self.endOfDocument;
     if ([textRange.end isEqual:endOfDocumentTextPosition])
-        return nil;
+        return YES;
     
-    // get the closest text position for the point
-    UITextPosition *tapPosition = [self closestPositionToPoint:point];
-    
-    return tapPosition;
+    return NO;
 }
 
 - (NSString *)rs_potentialLinkAtPoint:(CGPoint)point {
-
-    /*Grow a string around the tap until hitting a space, cr, lf, or beginning or end of document.*/
-
-    /*If we don't check for end of document, then you could tap way below end of text, and it would return a link if the last text was a link. This has the unfortunate side effect that you can't tap on the last character of a link if it appears at the end of a document. I can live with shipping that.*/
-
-
     UITextPosition *tapPosition = [self closestPositionNotAtEndOfDocumentToPoint:point];
     
-    NSMutableString *s = [NSMutableString stringWithString:@""];
-
-    /*Move right*/
-
-    UITextPosition *textPosition = tapPosition;
-
-    if ([self firstCharacterIsCrOrLf:textPosition]) {
+    if ([self firstCharacterIsCrOrLf:tapPosition]) {
         return nil;
     }
     
-    [self appendToString:s byMovingRightFromTextPosition:textPosition];
+    return [self stringByGrowingStringAroundTapPosition:tapPosition];
+}
 
-    /*Move left*/
-    [self handleMovingLeftTapPosition:tapPosition stringBuilder:s];
+- (NSString *)stringByGrowingStringAroundTapPosition:(UITextPosition *)tapPosition
+{
+    NSMutableString *s = [NSMutableString stringWithString:@""];
+    [self appendToString:s byMovingRightFromAndIncludingTextPosition:tapPosition];
+    [self appendToString:s byMovingLeftFromAndNotIncludingTextPosition:tapPosition];
     
     return s;
 }
 
 - (BOOL)firstCharacterIsCrOrLf:(UITextPosition *)startingTextPosition
 {
-    UITextRange *rangeOfCharacter = [self.tokenizer rangeEnclosingPosition:startingTextPosition withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
-    NSString *oneCharacter = [self textInRange:rangeOfCharacter];
+    NSString *oneCharacter = [self characterAtPosition:startingTextPosition];
     if ([oneCharacter isEqualToString:@"\n"] || [oneCharacter isEqualToString:@"\r"])
         return YES;
 
     return NO;
 }
 
-- (id)appendToString:(NSMutableString *)s byMovingRightFromTextPosition:(UITextPosition *)textPosition
+- (void)appendToString:(NSMutableString *)s byMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition
 {
     return [self appendToString:s
-               byMovingByOffset:1
+               byMovingByOffset:RightOffset
                fromTextPosition:textPosition];
 }
 
-- (id)appendToString:(NSMutableString *)s byMovingByOffset:(NSInteger)offset fromTextPosition:(UITextPosition *)textPosition
+- (void)appendToString:(NSMutableString *)s byMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition
 {
-    while (true) {
-        UITextRange *rangeOfCharacter = [self.tokenizer rangeEnclosingPosition:textPosition withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
-        NSString *oneCharacter = [self textInRange:rangeOfCharacter];
-        
-        if (!stringCharacterIsAllowedAsPartOfLink(oneCharacter))
-            break;
-        [self addCharacter:oneCharacter
-         intoMutableString:s
-atFrontOrBackDependingOnOffset:offset];
-        
-        textPosition = [self positionFromPosition:textPosition offset:offset];
-        if (textPosition == nil)
-            break;
-    }
+    textPosition = [self positionFromPosition:textPosition offset:LeftOffset];
     
-    return s;
+    [self appendToString:s
+        byMovingByOffset:LeftOffset
+        fromTextPosition:textPosition];
 }
 
+- (void)appendToString:(NSMutableString *)s byMovingByOffset:(NSInteger)offset fromTextPosition:(UITextPosition *)textPosition
+{
+    [self forAllowedCharacterStartingAtTextPosition:textPosition
+                                    movingBy:offset
+                                          do:^(NSString *character) {
+                                              if (!character) {
+                                                  return;
+                                              }
+                                              
+                                              [self addCharacter:character
+                                               intoMutableString:s
+                                  atFrontOrBackDependingOnOffset:offset];
+                                          }];
+}
+
+typedef void(^CharacterBlock)(NSString *character);
+- (void)forAllowedCharacterStartingAtTextPosition:(UITextPosition *)startPosition movingBy:(NSInteger)offset do:(CharacterBlock)block
+{
+    [self forTextPositionStartingAt:startPosition
+                           movingBy:offset
+                                 do:^(UITextPosition *textPosition) {
+                                     NSString *oneCharacter = [self characterAllowedAsPartOfLinkAtPosition:textPosition];
+                                     block(oneCharacter);
+                                 }];
+}
+
+
+typedef void(^TextPositionBlock)(UITextPosition *textPosition);
+- (void)forTextPositionStartingAt:(UITextPosition *)startPosition movingBy:(NSInteger)offset do:(TextPositionBlock)block
+{    
+    for (UITextPosition *textPosition = startPosition;
+         textPosition != nil;
+         textPosition = [self positionFromPosition:textPosition offset:offset])
+    {
+        block(textPosition);
+    }
+}
+
+- (NSString *)characterAllowedAsPartOfLinkAtPosition:(UITextPosition *)textPosition
+{
+    NSString *oneCharacter = [self characterAtPosition:textPosition];
+    if (!stringCharacterIsAllowedAsPartOfLink(oneCharacter))
+        return nil;
+    
+    return oneCharacter;
+}
+
+- (NSString *)characterAtPosition:(UITextPosition *)textPosition
+{
+    UITextRange *rangeOfCharacter = [self.tokenizer rangeEnclosingPosition:textPosition withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
+    NSString *oneCharacter = [self textInRange:rangeOfCharacter];
+    return oneCharacter;
+}
+
+static const NSInteger LeftOffset = -1;
+static const NSInteger RightOffset = 1;
 - (void)addCharacter:(NSString *)oneCharacter intoMutableString:(NSMutableString *)s atFrontOrBackDependingOnOffset:(NSInteger)offset
 {
-    if (offset == 1) {
+    if (offset == RightOffset) {
         [s appendString:oneCharacter];
-    }else if( offset == -1) {
+    }else if( offset == LeftOffset) {
         [s insertString:oneCharacter atIndex:0];
-    }
-}
-
-//[self appendToString:s
-//    byMovingByOffset:-1
-//    fromTextPosition:tapPosition];
-- (void)handleMovingLeftTapPosition:(UITextPosition *)tapPosition stringBuilder:(NSMutableString *)s
-{
-    UITextPosition *textPosition = [self positionFromPosition:tapPosition offset:-1];
-    if (textPosition != nil) {
-        
-        while (true) {
-            UITextRange *rangeOfCharacter = [self.tokenizer rangeEnclosingPosition:textPosition withGranularity:UITextGranularityCharacter inDirection:UITextWritingDirectionNatural];
-            NSString *oneCharacter = [self textInRange:rangeOfCharacter];
-            
-            if (!stringCharacterIsAllowedAsPartOfLink(oneCharacter))
-                break;
-            [s insertString:oneCharacter atIndex:0];
-            
-            textPosition = [self positionFromPosition:textPosition offset:-1];
-            if (textPosition == nil)
-                break;
-        }
     }
 }
 
