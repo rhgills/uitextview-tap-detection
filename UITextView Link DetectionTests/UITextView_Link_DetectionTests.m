@@ -306,8 +306,10 @@
 }
 
 
-- (void)testGrowingStringAroundTapPositionCombinesLeftAndRight
+- (void)testGrowingStringAroundTapPositionCombinesLeftAndRightOld
 {
+    return;
+    
     id position = [self newMock];
     
     // check that each mutable stirng is the same.
@@ -342,6 +344,18 @@
     
     CFRelease(stringArgLeft);
     CFRelease(stringArgRight);
+}
+
+- (void)testGrowingStringCombines
+{
+    id position = [self newAutoverifyingMock];
+    
+    [[[fakeTextView stub] andReturn:@"ab"] stringByMovingLeftFromAndNotIncludingTextPosition:position];
+    [[[fakeTextView stub] andReturn:@"cde"] stringByMovingRightFromAndIncludingTextPosition:position];
+    
+    NSString *string = [textView stringByGrowingStringAroundTapPosition:position];
+    
+    assertThat(string, equalTo(@"abcde"));
 }
 
 - (id)newAutoverifyingMock
@@ -396,72 +410,6 @@
     NSString *string = [textView stringByMovingLeftFromAndNotIncludingTextPosition:positions[2]];
     
     assertThat(string, equalTo(@"ab"));
-}
-
-
-- (void)testAppendToStringByMovingRight
-{
-    id position1 = [self newAutoverifyingMock];
-    
-    NSArray *positions = @[position1, [self newAutoverifyingMock]];
-    NSArray *characters = @[@"a", @"b"];
-    
-//    NSMutableString *mutableString = [NSMutableString string];
-    id mutableString = [self autoVerifiedMockForClass:[NSMutableString class]];
-    
-    [[[fakeTextView stub] andReturn:positions[1]] positionFromPosition:positions[0] offset:1];
-    [[fakeTextView stub] positionFromPosition:positions[1] offset:1]; // returns nil
-    
-    [[[fakeTextView stub] andReturn:characters[0]] characterAtPosition:positions[0]];
-    [[[fakeTextView stub] andReturn:characters[1]] characterAtPosition:positions[1]];
-    
-    // OCMOCK_VALUE((BOOL){YES})
-    [[[fakeTextView stub] andReturn:characters[0]] characterAllowedAsPartOfLinkAtPosition:positions[0]];
-    [[[fakeTextView stub] andReturn:characters[1]] characterAllowedAsPartOfLinkAtPosition:positions[1]];
-    
-    
-    // expect!
-    [[mutableString expect] appendString:@"a"];
-    [[mutableString expect] appendString:@"b"];
-    
-    [textView appendToString:mutableString byMovingRightFromAndIncludingTextPosition:positions[0]];
-    
-//    assertThat(mutableString, equalTo(@"abc"));
-}
-
-- (void)testAppendToStringByMovingLeft
-{
-    id position1 = [self newAutoverifyingMock];
-    
-    NSArray *positions = @[position1, [self newAutoverifyingMock], [self newAutoverifyingMock]];
-    NSArray *characters = @[@"a", @"b", @"c"];
-    
-    
-    
-    //    NSMutableString *mutableString = [NSMutableString string];
-    id mutableString = [self autoVerifiedMockForClass:[NSMutableString class]];
-    
-    [[[fakeTextView stub] andReturn:positions[1]] positionFromPosition:positions[2] offset:-1];
-    [[[fakeTextView stub] andReturn:positions[0]] positionFromPosition:positions[1] offset:-1];
-    [[fakeTextView stub] positionFromPosition:positions[0] offset:-1]; // returns nil
-    
-    [[[fakeTextView stub] andReturn:characters[0]] characterAtPosition:positions[0]];
-    [[[fakeTextView stub] andReturn:characters[1]] characterAtPosition:positions[1]];
-    [[[fakeTextView stub] andReturn:characters[2]] characterAtPosition:positions[2]];
-    
-    // OCMOCK_VALUE((BOOL){YES})
-    [[[fakeTextView stub] andReturn:characters[0]] characterAllowedAsPartOfLinkAtPosition:positions[0]];
-    [[[fakeTextView stub] andReturn:characters[1]] characterAllowedAsPartOfLinkAtPosition:positions[1]];
-    [[[fakeTextView stub] andReturn:characters[2]] characterAllowedAsPartOfLinkAtPosition:positions[2]];
-    
-    
-    // expect!
-    [[mutableString expect] insertString:@"b" atIndex:0];
-    [[mutableString expect] insertString:@"a" atIndex:0];
-    
-    [textView appendToString:mutableString byMovingLeftFromAndNotIncludingTextPosition:positions[2]];
-    
-    //    assertThat(mutableString, equalTo(@"abc"));
 }
 
 @end

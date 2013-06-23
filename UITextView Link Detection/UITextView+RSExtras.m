@@ -49,15 +49,9 @@ static BOOL stringCharacterIsAllowedAsPartOfLink(NSString *s) {
 
 - (NSString *)stringByGrowingStringAroundTapPosition:(UITextPosition *)tapPosition
 {
-//    NSString *leftPart = [self stringByMovingLeftFromAndNotIncludingTextPosition:tapPosition];
-//    NSString *rightPart = [self stringByMovingRightFromAndIncludingTextPosition:tapPosition];
-//    return [leftPart stringByAppendingString:rightPart];
-    
-    NSMutableString *s = [NSMutableString stringWithString:@""];
-    [self appendToString:s byMovingRightFromAndIncludingTextPosition:tapPosition];
-    [self appendToString:s byMovingLeftFromAndNotIncludingTextPosition:tapPosition];
-    
-    return s;
+    NSString *leftPart = [self stringByMovingLeftFromAndNotIncludingTextPosition:tapPosition];
+    NSString *rightPart = [self stringByMovingRightFromAndIncludingTextPosition:tapPosition];
+    return [leftPart stringByAppendingString:rightPart];
 }
 
 - (NSString *)stringByMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition
