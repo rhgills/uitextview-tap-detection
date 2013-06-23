@@ -27,4 +27,11 @@
 
 - (NSString *)characterAtPosition:(UITextPosition *)textPosition;
 
+- (NSString *)stringByGrowingStringAroundTapPosition:(UITextPosition *)tapPosition;
+- (NSString *)characterAllowedAsPartOfLinkAtPosition:(UITextPosition *)textPosition;
+
+
+- (void)addCharacter:(NSString *)oneCharacter intoMutableString:(NSMutableString *)s atFrontOrBackDependingOnOffset:(NSInteger)offset;
+- (NSString *)stringByMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition;
+- (NSString *)stringByMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition;
 @end

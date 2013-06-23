@@ -49,11 +49,46 @@ static BOOL stringCharacterIsAllowedAsPartOfLink(NSString *s) {
 
 - (NSString *)stringByGrowingStringAroundTapPosition:(UITextPosition *)tapPosition
 {
+//    NSString *leftPart = [self stringByMovingLeftFromAndNotIncludingTextPosition:tapPosition];
+//    NSString *rightPart = [self stringByMovingRightFromAndIncludingTextPosition:tapPosition];
+//    return [leftPart stringByAppendingString:rightPart];
+    
     NSMutableString *s = [NSMutableString stringWithString:@""];
     [self appendToString:s byMovingRightFromAndIncludingTextPosition:tapPosition];
     [self appendToString:s byMovingLeftFromAndNotIncludingTextPosition:tapPosition];
     
     return s;
+}
+
+- (NSString *)stringByMovingLeftFromAndNotIncludingTextPosition:(UITextPosition *)textPosition
+{
+    textPosition = [self positionFromPosition:textPosition offset:LeftOffset];
+    
+    return [self stringByMovingByOffset:LeftOffset fromTextPosition:textPosition];
+}
+
+- (NSString *)stringByMovingRightFromAndIncludingTextPosition:(UITextPosition *)textPosition
+{
+    return [self stringByMovingByOffset:RightOffset fromTextPosition:textPosition];
+}
+
+- (NSString *)stringByMovingByOffset:(NSInteger)offset fromTextPosition:(UITextPosition *)textPosition
+{
+    NSMutableString *string = [NSMutableString string];
+    
+    [self forAllowedCharacterStartingAtTextPosition:textPosition
+                                           movingBy:offset
+                                                 do:^(NSString *character) {
+                                                     if (!character) {
+                                                         return;
+                                                     }
+                                                     
+                                                     [self addCharacter:character
+                                                      intoMutableString:string
+                                         atFrontOrBackDependingOnOffset:offset];
+                                                 }];
+    
+    return [NSString stringWithString:string];
 }
 
 // nil behavior important?
@@ -118,15 +153,27 @@ typedef void(^CharacterBlock)(NSString *character);
 
 typedef void(^TextPositionBlock)(UITextPosition *textPosition);
 - (void)forTextPositionStartingAt:(UITextPosition *)startPosition movingBy:(NSInteger)offset do:(TextPositionBlock)block
-{    
+{
+//    UITextPosition *textPosition = startPosition;
+//    while (true) {
+//        textPosition = [self positionFromPosition:textPosition offset:offset];
+//        if (!textPosition)
+//            break;
+//        
+//        NSParameterAssert(textPosition);
+//        block(textPosition);
+//    }
+    
     for (UITextPosition *textPosition = startPosition;
          textPosition != nil;
          textPosition = [self positionFromPosition:textPosition offset:offset])
     {
+        NSParameterAssert(textPosition);
         block(textPosition);
     }
 }
 
+// TODO: should be BOOL
 - (NSString *)characterAllowedAsPartOfLinkAtPosition:(UITextPosition *)textPosition
 {
     NSString *oneCharacter = [self characterAtPosition:textPosition];

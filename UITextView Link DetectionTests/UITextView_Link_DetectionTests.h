@@ -7,7 +7,8 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "RHGAutoverifyingSenTestCase.h"
 
-@interface UITextView_Link_DetectionTests : SenTestCase
+@interface UITextView_Link_DetectionTests : RHGAutoverifyingSenTestCase
 
 @end

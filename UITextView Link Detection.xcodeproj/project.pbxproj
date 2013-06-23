@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		448E5D52D3A94F8A9C28F103 /* libPods-UITextView Link DetectionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5D8159A105458ABCB08657 /* libPods-UITextView Link DetectionTests.a */; };
-		53CF58681FAD4C46B5F36599 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9DC3375BB954A0DBECEE36D /* libPods.a */; };
+		4B40EDD7177675150041D6E6 /* RHGAutoverifyingSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B40EDD6177675150041D6E6 /* RHGAutoverifyingSenTestCase.m */; };
 		E1A5C6CC1775EEE90044ADE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CB1775EEE90044ADE9 /* UIKit.framework */; };
 		E1A5C6CE1775EEE90044ADE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CD1775EEE90044ADE9 /* Foundation.framework */; };
 		E1A5C6D01775EEE90044ADE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1A5C6CF1775EEE90044ADE9 /* CoreGraphics.framework */; };
@@ -40,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		025C98221CE441E088B36FBC /* Pods-UITextView Link DetectionTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITextView Link DetectionTests.xcconfig"; path = "Pods/Pods-UITextView Link DetectionTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4B40EDD5177675150041D6E6 /* RHGAutoverifyingSenTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RHGAutoverifyingSenTestCase.h; path = "UITextView Link Detection/RHGAutoverifyingSenTestCase.h"; sourceTree = SOURCE_ROOT; };
+		4B40EDD6177675150041D6E6 /* RHGAutoverifyingSenTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RHGAutoverifyingSenTestCase.m; path = "UITextView Link Detection/RHGAutoverifyingSenTestCase.m"; sourceTree = SOURCE_ROOT; };
 		AC5D8159A105458ABCB08657 /* libPods-UITextView Link DetectionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UITextView Link DetectionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9DC3375BB954A0DBECEE36D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A5C6C71775EEE90044ADE9 /* UITextView Link Detection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UITextView Link Detection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +79,6 @@
 				E1A5C6CC1775EEE90044ADE9 /* UIKit.framework in Frameworks */,
 				E1A5C6CE1775EEE90044ADE9 /* Foundation.framework in Frameworks */,
 				E1A5C6D01775EEE90044ADE9 /* CoreGraphics.framework in Frameworks */,
-				53CF58681FAD4C46B5F36599 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +165,8 @@
 			children = (
 				E1A5C6F51775EEE90044ADE9 /* UITextView_Link_DetectionTests.h */,
 				E1A5C6F61775EEE90044ADE9 /* UITextView_Link_DetectionTests.m */,
+				4B40EDD5177675150041D6E6 /* RHGAutoverifyingSenTestCase.h */,
+				4B40EDD6177675150041D6E6 /* RHGAutoverifyingSenTestCase.m */,
 				E1A5C6F01775EEE90044ADE9 /* Supporting Files */,
 			);
 			path = "UITextView Link DetectionTests";
@@ -359,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1A5C6F71775EEE90044ADE9 /* UITextView_Link_DetectionTests.m in Sources */,
+				4B40EDD7177675150041D6E6 /* RHGAutoverifyingSenTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +418,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -435,7 +439,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -450,6 +454,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UITextView Link Detection/UITextView Link Detection-Prefix.pch";
 				INFOPLIST_FILE = "UITextView Link Detection/UITextView Link Detection-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -462,6 +467,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UITextView Link Detection/UITextView Link Detection-Prefix.pch";
 				INFOPLIST_FILE = "UITextView Link Detection/UITextView Link Detection-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
