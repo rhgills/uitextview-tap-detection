@@ -1,0 +1,9 @@
+TODO:
+
+trace the execution flow from rs_linkAtPoint down. you should be able to match that execution flow with tests, and the tests linking together should give confidence that everything works as intended
+
+create an acceptance test in the form of an example project - does it actually detect a link (that rs link says should be one). use a real UITextView.
+
+extract methods that are categories of UITextView that don't belong there.
+
+
